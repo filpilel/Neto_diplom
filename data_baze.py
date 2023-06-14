@@ -5,7 +5,7 @@ def create_tables(compound):
         id SERIAL PRIMARY KEY,
         vk_id INTEGER NOT NULL UNIQUE,
         first_name VARCHAR(30) NOT NULL,
-        last_name VARCHAR(30) NOT NULL,     
+        last_name VARCHAR(30) NOT NULL,
         age INTEGER NOT NULL,
         city_id INTEGER NOT NULL
         );
@@ -35,8 +35,18 @@ def delete_tables(compound):
 def insert_user(compound, user_info):
     with compound.cursor() as cursor:
         cursor.execute("""
-        INSERT INTO users(vk_id, first_name, last_name, age, city_id) VALUES
-        (%s, %s, %s, %s, %s) RETURNING id
+        select id from users
+        where vk_id = %s
+        """, (user_info.get('id'),))
+
+        user_data_baze_id = cursor.fetchone()
+
+        if user_data_baze_id is not None:
+            return user_data_baze_id[0]
+
+        cursor.execute("""
+        insert into users(vk_id, first_name, last_name, age, city_id) values
+        (%s, %s, %s, %s, %s) returning id
         """, (user_info.get('id'),
               user_info.get('first_name'),
               user_info.get('last_name'),
