@@ -54,8 +54,8 @@ def handle_search_request(event):
 
         photos_link = bot_back.get_most_popular_photo(photos_info)
         bot_back.send_photo(event.user_id, f"Кандидат на знакомство - {selected_user.get('first_name')} {selected_user.get('last_name')}\n"
-                                  f"Ссылка: https://vk.com/id{selected_user.get('id')}\n"
-                                  f"Топ-3 популярные фотографии:", selected_user, photos_link)
+                                           f"Ссылка: https://vk.com/id{selected_user.get('id')}\n"
+                                           f"Топ-3 популярные фотографии:", selected_user, photos_link)
     except Exception as exc:
         print(exc)
         bot_back.send_message(event.user_id, "Произошла ошибка при поиске пользователя, попробуйте еще раз.")

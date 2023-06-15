@@ -59,7 +59,6 @@ def insert_user(compound, user_info):
     else:
         return False
 
-
 def insert_result_user(compound, user_data_baze_id, finally_selected_user):
     with compound.cursor() as cursor:
         cursor.execute("""

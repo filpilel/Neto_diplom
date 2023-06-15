@@ -129,6 +129,8 @@ class BotBack():
     def search_users(self, user_info):
         user_list = []
         search_age = user_info['age'] - 2
+        count = 30
+        offset = 0
 
         while search_age <= user_info['age'] + 2:
             result = self.vk_acc.method('users.search',
@@ -152,8 +154,10 @@ class BotBack():
                 search_age += 1
                 time.sleep(1)
 
-                if len(user_list) >= 30:
-                    break
+                offset += count
+
+                if len(user_list) >= count:
+                    return count, user_list
 
             elif result:
                 return 0, user_list
